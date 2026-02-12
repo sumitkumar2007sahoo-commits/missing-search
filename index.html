@@ -1,46 +1,243 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Rapid Missing Person Search</title>
-    <style>
-    body {
-        font-family: Arial;
-        text-align: center;
-        padding: 40px;
-        background: #f2f2f2;
-    }
-    h1 { color: #222; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapid Missing Person Search</title>
 
-    .btn {
-        display: block;
-        margin: 20px auto;
-        padding: 15px;
-        width: 260px;
-        background: #007bff;
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        border-radius: 6px;
-    }
+<style>
 
-    .btn.red {
-        background: #dc3545;
-    }
-    </style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+min-height:100vh;
+transition:0.4s;
+}
+
+/* Light Mode */
+body.light{
+background:#f4f6f9;
+color:#222;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(10px);
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+}
+
+.nav-links a{
+margin-left:20px;
+text-decoration:none;
+color:white;
+font-size:14px;
+}
+
+body.light .nav-links a{
+color:#222;
+}
+
+.toggle-btn{
+cursor:pointer;
+padding:6px 12px;
+border-radius:20px;
+background:#ff4b5c;
+font-size:12px;
+}
+
+/* Hero Section */
+.hero{
+text-align:center;
+padding:80px 20px;
+animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+.hero h1{
+font-size:34px;
+margin-bottom:15px;
+}
+
+.hero p{
+font-size:15px;
+opacity:0.9;
+margin-bottom:30px;
+}
+
+.btn{
+display:inline-block;
+margin:10px;
+padding:14px 28px;
+border-radius:40px;
+text-decoration:none;
+font-weight:600;
+transition:0.3s;
+}
+
+.btn-primary{
+background:white;
+color:#203a43;
+}
+
+.btn-danger{
+background:#ff4b5c;
+color:white;
+}
+
+.btn:hover{
+transform:translateY(-4px);
+box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* Search Section */
+.search-section{
+text-align:center;
+padding:40px 20px;
+}
+
+.search-box{
+padding:12px;
+width:300px;
+border-radius:25px;
+border:none;
+outline:none;
+}
+
+/* Missing List */
+.list{
+padding:40px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:20px;
+border-radius:15px;
+width:220px;
+backdrop-filter:blur(8px);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+}
+
+.card h3{
+margin-bottom:8px;
+}
+
+.card p{
+font-size:13px;
+opacity:0.9;
+}
+
+/* Footer */
+footer{
+text-align:center;
+padding:30px;
+font-size:12px;
+opacity:0.8;
+}
+
+body.light nav{
+background:white;
+}
+
+body.light .card{
+background:white;
+color:#222;
+}
+
+</style>
 </head>
 
 <body>
 
-<h1>Rapid Missing Person Search</h1>
-<p>Helping communities find missing people fast</p>
+<nav>
+<div class="logo">Rapid Missing Person Search</div>
+<div class="nav-links">
+<a href="#">Home</a>
+<a href="#">Missing List</a>
+<a href="#">Admin</a>
+<span class="toggle-btn" onclick="toggleMode()">Toggle Mode</span>
+</div>
+</nav>
 
-<a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeZiNwBdpad5OxZ6O9nlgkvhVvVC7rQzSxyFfFOInyWGZpW-A/viewform?usp=preview" target="_blank">
-   Report Missing Person
+<section class="hero">
+<h1>Find Missing People Faster</h1>
+<p>Community powered rapid response platform.</p>
+
+<!-- 🔴 GOOGLE FORM LINK ADD KARNA YAHA -->
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSeZiNwBdpad5OxZ6O9nlgkvhVvVC7rQzSxyFfFOInyWGZpW-A/viewform?usp=preview" class="btn btn-primary" target="_blank">
+Report Missing Person
 </a>
 
-<a class="btn red" href="https://docs.google.com/forms/d/e/1FAIpQLSezZ75eOhy8g-d6utcDJpltyjnm6CJlKG3DD-3FO_3ojQpRlA/viewform?usp=publish-editor" target="_blank">
-   Report Sighting
+<!-- 🔴 GOOGLE FORM LINK ADD KARNA YAHA -->
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSezZ75eOhy8g-d6utcDJpltyjnm6CJlKG3DD-3FO_3ojQpRlA/viewform?usp=publish-editor" class="btn btn-danger" target="_blank">
+Report Sighting
 </a>
+
+</section>
+
+<section class="search-section">
+<h2>Search Missing Person</h2>
+<br>
+<input type="text" class="search-box" placeholder="Search by name...">
+</section>
+
+<section class="list">
+
+<div class="card">
+<h3>Rahul Kumar</h3>
+<p>Age: 14</p>
+<p>Last Seen: Delhi</p>
+</div>
+
+<div class="card">
+<h3>Anita Sharma</h3>
+<p>Age: 22</p>
+<p>Last Seen: Mumbai</p>
+</div>
+
+<div class="card">
+<h3>Mohit Singh</h3>
+<p>Age: 30</p>
+<p>Last Seen: Jaipur</p>
+</div>
+
+</section>
+
+<footer>
+In case of emergency contact local authorities immediately.
+</footer>
+
+<script>
+function toggleMode(){
+document.body.classList.toggle("light");
+}
+</script>
 
 </body>
 </html>
