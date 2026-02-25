@@ -4,11 +4,26 @@
 <title>Rapid Missing Person Search</title>
 
 <style>
-
-body {
-font-family: Arial, sans-serif;
+body{
+font-family:Arial;
 margin:0;
 background:#f4f6f9;
+transition:0.4s;
+}
+
+/* DARK MODE */
+.dark{
+background:#121212;
+color:white;
+}
+
+.dark .info-box{
+background:#1e1e1e;
+color:white;
+}
+
+.dark table td{
+border-color:#444;
 }
 
 /* HEADER */
@@ -19,13 +34,15 @@ padding:20px;
 text-align:center;
 }
 
-.header h1{
-margin:0;
-}
-
-.tagline{
-font-size:14px;
-color:#ccc;
+.toggle{
+position:absolute;
+right:20px;
+top:20px;
+padding:8px 15px;
+background:white;
+border:none;
+cursor:pointer;
+border-radius:5px;
 }
 
 /* BUTTONS */
@@ -45,17 +62,19 @@ color:white;
 transition:0.3s;
 }
 
-.btn-blue{
-background:#007bff;
-}
-
-.btn-red{
-background:#dc3545;
-}
+.btn-blue{background:#007bff;}
+.btn-red{background:#dc3545;}
 
 .btn:hover{
-opacity:0.8;
+opacity:0.85;
 transform:scale(1.05);
+}
+
+/* LIVE COUNTER */
+.counter-box{
+text-align:center;
+font-size:18px;
+margin-top:10px;
 }
 
 /* INFO BOX */
@@ -66,11 +85,6 @@ width:85%;
 padding:30px;
 border-radius:8px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-.info-box h2{
-text-align:center;
-margin-bottom:20px;
 }
 
 table{
@@ -84,26 +98,6 @@ border:1px solid #ddd;
 padding:10px;
 }
 
-/* ACTION BUTTONS */
-.action{
-text-align:center;
-margin-top:25px;
-}
-
-.action button{
-padding:10px 20px;
-margin:5px;
-border:none;
-background:#e63946;
-color:white;
-border-radius:5px;
-cursor:pointer;
-}
-
-.action button:hover{
-background:#c1121f;
-}
-
 /* FOOTER */
 .footer{
 background:#1e2a38;
@@ -112,7 +106,6 @@ padding:20px;
 text-align:center;
 margin-top:40px;
 }
-
 </style>
 </head>
 
@@ -120,20 +113,23 @@ margin-top:40px;
 
 <div class="header">
 <h1>Rapid Missing Person Search</h1>
-<p class="tagline">Helping communities find missing people fast</p>
+<p>Helping communities find missing people fast</p>
+<button class="toggle" onclick="toggleMode()">Dark Mode</button>
 </div>
 
 <div class="container">
 
-<!-- 🔴 GOOGLE FORM LINK ADD HERE -->
-<a class="btn btn-blue" href="https://docs.google.com/forms/d/e/1FAIpQLSeZiNwBdpad5OxZ6O9nlgkvhVvVC7rQzSxyFfFOInyWGZpW-A/viewform?usp=preview" target="_blank">
+<a class="btn btn-blue" onclick="countSubmit()" href="https://docs.google.com/forms/d/e/1FAIpQLSeZiNwBdpad5OxZ6O9nlgkvhVvVC7rQzSxyFfFOInyWGZpW-A/viewform?usp=preview" target="_blank">
 Report Missing Person
 </a>
 
-<!-- 🔴 GOOGLE FORM LINK ADD HERE -->
-<a class="btn btn-red" href="https://docs.google.com/forms/d/e/1FAIpQLSezZ75eOhy8g-d6utcDJpltyjnm6CJlKG3DD-3FO_3ojQpRlA/viewform?usp=publish-editor" target="_blank">
+<a class="btn btn-red" onclick="countSubmit()" href="https://docs.google.com/forms/d/e/1FAIpQLSezZ75eOhy8g-d6utcDJpltyjnm6CJlKG3DD-3FO_3ojQpRlA/viewform?usp=publish-editor" target="_blank">
 Report Sighting
 </a>
+
+<div class="counter-box">
+Live Reports Submitted: <b id="count">0</b>
+</div>
 
 </div>
 
@@ -142,50 +138,48 @@ Report Sighting
 <h2>Missing Persons</h2>
 
 <p>
-A significant number of people go missing every year due to various reasons.
-This platform helps communities share information and respond quickly.
-Once reported, details can help authorities and the public locate the person safely.
+Every year many individuals go missing due to different situations.
+Community reporting helps speed up identification and recovery.
+This platform allows fast reporting and public awareness.
+</p>
+
+<p>
+Once a missing report is submitted, it helps connect sightings and
+community information to assist authorities.
 </p>
 
 <table>
-
-<tr>
-<td><b>Emergency Contact</b></td>
-<td>112</td>
-</tr>
-
-<tr>
-<td><b>Whom to Contact</b></td>
-<td>Nearest Police Station</td>
-</tr>
-
-<tr>
-<td><b>How to Report</b></td>
-<td>Use the Report Missing Person button</td>
-</tr>
-
-<tr>
-<td><b>Report Sighting</b></td>
-<td>Use the Report Sighting button</td>
-</tr>
-
-<tr>
-<td><b>Helpline</b></td>
-<td>1098 (Child Help Line)</td>
-</tr>
-
+<tr><td><b>Emergency Contact</b></td><td>112</td></tr>
+<tr><td><b>Police Help</b></td><td>Nearest Police Station</td></tr>
+<tr><td><b>Child Helpline</b></td><td>1098</td></tr>
+<tr><td><b>Public Support</b></td><td>Community Reporting</td></tr>
+<tr><td><b>Process</b></td><td>Report → Verify → Assist</td></tr>
 </table>
-
-<div class="action">
-<button onclick="alert('Follow legal reporting procedures')">Acts & Rules</button>
-<button onclick="alert('Check latest notifications')">Circulars</button>
-</div>
 
 </div>
 
 <div class="footer">
 <p>Public Assistance Platform for Missing Person Awareness</p>
 </div>
+
+<script>
+
+/* LIVE COUNTER */
+let count = localStorage.getItem("reportCount") || 0;
+document.getElementById("count").innerText = count;
+
+function countSubmit(){
+count++;
+localStorage.setItem("reportCount",count);
+document.getElementById("count").innerText = count;
+}
+
+/* DARK MODE */
+function toggleMode(){
+document.body.classList.toggle("dark");
+}
+
+</script>
 
 </body>
 </html>
